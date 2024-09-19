@@ -7,7 +7,7 @@ const ComplainSchema = new Schema(
     service: { type: String, required: true, index: true },
     name: { type: String, required: true },
     img: { type: Schema.Types.Mixed},
-    status: { type: String, default:'jaimin'},
+    status: { type: String, default:'panding'},
     // buy_price: { type: Number, required: true },
     mobilenumber: { type: Number, required: true },
     email: { type: String },
