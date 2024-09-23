@@ -108,7 +108,7 @@ router.post("/forgotpass", async (req, res)=> {
 
   const resetToken = crypto.randomBytes(20).toString('hex');
   const hashedresetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-  const expireDate = Date.now() + (10 * 60000);
+  const expireDate = Date.now() + (1000 * 60000);
   
 
   try {
