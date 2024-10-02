@@ -8,7 +8,7 @@ const connectToMongo = () => {
     .connect(mongoURI, {
         //useUnifiedTopology: true,
         //useNewUrlParser: true,
-        autoIndex: true, //make this also true
+        autoIndex: true, 
     })
     .then(() => {
       console.log("successfully db connected");
