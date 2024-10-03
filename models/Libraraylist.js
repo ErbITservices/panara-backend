@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const LibraraylistSchema = new Schema(
   {
     region: { type: String, required: true },
-    lname: { type: String, required: true,unique: true, },
+    lname: { type: String, required: true,unique: true },
     startdate: { type: String, required: true },
     enddate: { type: String, required: true },
     amount: { type: String, required: true },
