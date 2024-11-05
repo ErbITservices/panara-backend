@@ -12,5 +12,5 @@ const ComplainSchema = new Schema(
   { timestamps: true }
 );
 
-const Contectschema = mongoose.model("Contectschema", Contectschema);
-module.exports = Contectschema;
+const Contactschema = mongoose.model("Contactschema", Contactschema);
+module.exports = Contactschema;

@@ -4,7 +4,7 @@ const {
   uploadImageToCloudinary,
   deleteImageFromCloudinary,
 } = require("../utils/cloudinaryMethods.js");
-const Complain = require("../models/Contectschema.js");
+const Complain = require("../models/Contact.js");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 
@@ -15,8 +15,6 @@ const transporter = nodemailer.createTransport({
     pass: "rorvwwarciklfgyw",
   },
 });
-
-
 
 router.post("/", async (req, res) => {
   const id = mongoose.Types.ObjectId();
@@ -37,7 +35,7 @@ router.post("/", async (req, res) => {
         form: "erbitservices@gmail.com",
         to: `${savedProduct.Email},patelmihir2712005@gmail.com`,
         subject: "Complain received",
-        text: ` We Received New Contect Requist Of ${savedProduct.Name} facing issues and it's decripstion is it :-  ${savedProduct.Descr} `,
+        text: ` We Received New Contact Requist Of ${savedProduct.Name} facing issues and it's decripstion is it :-  ${savedProduct.Descr} `,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
