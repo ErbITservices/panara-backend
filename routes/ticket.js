@@ -35,12 +35,26 @@ router.get("/:lname", async (req, res) => {
     res.status(400).json({ error: "internal servr error" });
   }
 });
+router.get("/region/:region", async (req, res) => {
+  try { 
+    console.log( req.params.region );
+    
+    const library = await Libraraylist.find({ region: req.params.region });
+    res.status(200).json(library);
+    console.log("done");
+    console.log(library); 
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: "internal servr error" });
+  }
+});
 router.post("/", async (req, res) => {
   const id = mongoose.Types.ObjectId();
     console.log(id);
-    
       try {
         const data = req.body;
+        console.log(data);
+        
         const newticket = new Libraraylist(data);
         const savedticket = await newticket.save();
         console.log("data save");
