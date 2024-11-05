@@ -45,6 +45,7 @@ app.use("/api/cart", require("./routes/cart"));
 app.use("/api/orders", require("./routes/order"));
 app.use("/api/ticket", require("./routes/ticket"));
 app.use("/api/complain", require("./routes/complain"));
+app.use("/api/Contect", require("./routes/Contectroute"));
 app.use("/api/checkout", require("./routes/stripe"));
 app.use("/api/announcment", require("./routes/announcment"));
 app.use("/api/buy", require("./routes/paymentRout"));
