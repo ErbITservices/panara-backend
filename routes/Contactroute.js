@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
         form: "erbitservices@gmail.com",
         to: `${savedProduct.Email},patelmihir2712005@gmail.com`,
         subject: "Complain received",
-        text: ` We Received New Contact Requist Of ${savedProduct.Name} facing issues and it's decripstion is it :-  ${savedProduct.Descr} `,
+        text: ` We Received New Contact Request Of ${savedProduct.Name}. decripstion :-  ${savedProduct.Descr} , mobile number :- ${savedProduct.Number}, Email :- ${savedProduct.Email}`,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
