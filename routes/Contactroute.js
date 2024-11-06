@@ -20,10 +20,10 @@ router.post("/", async (req, res) => {
   const id = mongoose.Types.ObjectId();
   console.log(id);
   console.log("started");
-  console.log(req.body.data);
+  console.log(req.body);
   try {
     const savedProduct = await Complain.create({
-      ...req.body.data,
+      ...req.body,
       _id: id,
     });
     console.log("save");
@@ -48,6 +48,7 @@ router.post("/", async (req, res) => {
         }
       });
     }
+    savedProduct.save();
     res.status(200).json(savedProduct);
   } catch (err) {
     console.log("ohhno", err);
