@@ -18,18 +18,18 @@ const transporter = nodemailer.createTransport({
 
 router.post("/", async (req, res) => {
   const id = mongoose.Types.ObjectId();
-  console.log(id);
-  console.log("started");
-  console.log(req.body);
+  // console.log(id);
+  // console.log("started");
+  // console.log(req.body);
   try {
     const savedProduct = await Complain.create({
       ...req.body,
       _id: id,
     });
-    console.log("save");
+    // console.log("save");
 
     if (savedProduct) {
-      console.log(savedProduct.Email);
+      // console.log(savedProduct.Email);
 
       const mailOptions = {
         form: "erbitservices@gmail.com",
