@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
       
             const mailOptions={
                 form:"erbitservices@gmail.com",
-                to:`${savedProduct.email},patelmihir2712005@gmail.com`,
+                to:`${savedProduct.email},panaraenterprise.pvt.ltd@gmail.com`,
                 subject:"Complain received",
                 text:` We Received New Complain Of ${savedProduct.lname} facing issues and it's decripstion is it :-  ${savedProduct.problemstatement} `
             }
