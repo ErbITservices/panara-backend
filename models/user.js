@@ -24,8 +24,8 @@ const mongoose = require('mongoose');
         unique: true,
         match: [ /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "this email is not valid email type"] 
     },
-    number: { type: Number, required: [true, "Number is eequired"] },
-    password: { type: String, required: [true, "Password is eequired"] },
+    number: { type: Number, required: [true, "Number is required"] },
+    password: { type: String, required: [true, "Password is required"] },
     isAdmin: { type: Boolean, default: true },
     userIP: { type: String },  
     purchasedProducts: {type: Array, required: false},
