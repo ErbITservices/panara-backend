@@ -26,7 +26,7 @@ const mongoose = require('mongoose');
     },
     number: { type: Number, required: [true, "Number is eequired"] },
     password: { type: String, required: [true, "Password is eequired"] },
-    isAdmin: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: true },
     userIP: { type: String },  
     purchasedProducts: {type: Array, required: false},
 
