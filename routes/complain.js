@@ -25,15 +25,15 @@ router.put("/update/:id", async (req, res) => {
   
     try {
       const order = await Complain.findByIdAndUpdate(id, {status:status},{new: true});
-      // const emailHTML = createOrderTemplate(order)
+      const emailHTML = createOrderTemplate(order)
   
-      // sendEmail({
-      //   to: order.userInfo.email,
-      //   subject: "Order Confirmation",
-      //   emailhtml: emailHTML,
-      //   emailtext: emailHTML
-      // })
-  
+      sendEmail({
+        to: order.userInfo.email,
+        subject: "Order Confirmation",
+        emailhtml: emailHTML,
+        emailtext: emailHTML
+      })
+      
       res.status(200).json({message: `order status is successfully updated to ${status}`});
     } catch (err) {
       console.log(err)
@@ -49,27 +49,21 @@ router.post("/", async (req, res) => {
   console.log("started");
   console.log(req.body.library);
   try {
-    
-    
-    
     const savedProduct = await Complain.create({ ...req.body.library, _id: id });
     console.log('save');
-    
     if (savedProduct) {
       console.log(savedProduct.email);
-      
-            const mailOptions={
-                form:"erbitservices@gmail.com",
-                to:`${savedProduct.email},panaraenterprise.pvt.ltd@gmail.com`,
-                subject:"Complain received",
-                text:` We Received New Complain Of ${savedProduct.lname} facing issues and it's decripstion is it :-  ${savedProduct.problemstatement} `
-            }
-
+            const mailOptions = {
+              form: "erbitservices@gmail.com",
+              to: `${savedProduct.email},panaraenterprise.pvt.ltd@gmail.com`,
+              subject: "Complain received",
+              text: ` We Received New Complain Of ${savedProduct.lname}, Ticket Id Is ${id} facing issues and it's decripstion is it :-  ${savedProduct.problemstatement} `,
+            };
             transporter.sendMail(mailOptions,(error,info)=>{
                 if(error){
                     return res.status(400).json({msg:"error sending mail"});
                     }else{
-                        res.status(200).json({msg:"password reset link sent to your email"});
+                        res.status(200).json({msg:"Info Sended In to Mail"});
                     }
             })
         }
