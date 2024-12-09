@@ -121,7 +121,7 @@ router.post("/forgotpass", async (req, res)=> {
     if(!user) return res.status(401).json({sucess: false,message: "user with this email not exist"});
   
     //sending email thing
-    const resetURl = `https://panarait.in/api/auth/resetpassword/${resetToken}`;
+    const resetURl = `https://panarait.in/resetpassword/${resetToken}`;
     
     const emailtext = `
       you have requested a password reset
