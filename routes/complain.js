@@ -5,6 +5,8 @@ const Complain = require("../models/Complainschema.js");
 const mongoose  = require("mongoose");
 const nodemailer = require("nodemailer");
 
+const sendEmail = require("../helpers/sendEmail");
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -25,16 +27,17 @@ router.put("/update/:id", async (req, res) => {
   
     try {
       const order = await Complain.findByIdAndUpdate(id, {status:status},{new: true});
+      console.log(order);
       
   
       res.status(200).json({ message: `order status is successfully updated to ${status}` });
       // const emailHTML = createOrderTemplate(order);
-      // sendEmail({
-      //   to: order.userInfo.email,
-      //   subject: "Order Confirmation",
-      //   emailhtml: emailHTML,
-      //   emailtext: emailHTML
-      // })
+      sendEmail({
+        to: order.email,
+        subject: "Order Confirmation",
+        // emailhtml: emailHTML,
+        emailtext: "Your Complain Status Is Updated Please Check Now"
+      })
       
     } catch (err) {
       console.log(err)
