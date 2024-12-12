@@ -133,9 +133,9 @@ router.post("/forgotpass", async (req, res)=> {
       sendEmail({
         to: user.email,
         subject: "Forgot Password",
-        emailhtml: emailTemplate,
-        emailtext: emailtext
-      })
+        // emailhtml: emailTemplate,
+        emailtext: `You Can Reset Your Password Using This Link (This Link Expire In 1 Hour) ${resetURl}`,
+      });
 
       console.log("okay");
       
