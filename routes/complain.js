@@ -25,16 +25,17 @@ router.put("/update/:id", async (req, res) => {
   
     try {
       const order = await Complain.findByIdAndUpdate(id, {status:status},{new: true});
-      const emailHTML = createOrderTemplate(order)
-  
-      sendEmail({
-        to: order.userInfo.email,
-        subject: "Order Confirmation",
-        emailhtml: emailHTML,
-        emailtext: emailHTML
-      })
       
-      res.status(200).json({message: `order status is successfully updated to ${status}`});
+  
+      res.status(200).json({ message: `order status is successfully updated to ${status}` });
+      // const emailHTML = createOrderTemplate(order);
+      // sendEmail({
+      //   to: order.userInfo.email,
+      //   subject: "Order Confirmation",
+      //   emailhtml: emailHTML,
+      //   emailtext: emailHTML
+      // })
+      
     } catch (err) {
       console.log(err)
       res.status(500).json({message: "internal server error"});

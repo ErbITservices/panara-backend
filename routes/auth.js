@@ -137,13 +137,16 @@ router.post("/forgotpass", async (req, res)=> {
         emailtext: emailtext
       })
 
-
+      console.log("okay");
+      
     } catch (error) {
       //removing users reset token if its not valid
       await User.findOneAndUpdate({email: email}, {
         resetPasswordToken: undefined,
         resetPasswordExpire: undefined
       });
+      console.log("ohh no");
+      
       console.log(error)
       return res.status(401).json({sucess: false,message: "Failed to send email"})
     }
