@@ -149,7 +149,7 @@ transporter.sendMail(mailOptions, (error, info) => {
   if (error) {
     return res.status(401).json({ msg: "Failed to send email" });
   } else {
-    res.status(200).json({ msg: "Email send Sucessfully" });
+    res.status(200).json({sucess:true , msg: "Email send Sucessfully" });
   }
 });
 
