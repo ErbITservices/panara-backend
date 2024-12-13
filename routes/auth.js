@@ -3,11 +3,18 @@ const User = require("../models/user");
 const cryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const crypto = require('crypto')
+const nodemailer = require("nodemailer");
 const sendEmail = require('../helpers/sendEmail');
 const { createResetEmailHTML } = require("../helpers/orderConfrimation");
 
 
-
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "erbitservices@gmail.com",
+    pass: "rorvwwarciklfgyw",
+  },
+});
 
 //Register
 router.post("/register", async (req, res) => {
@@ -113,7 +120,7 @@ router.post("/forgotpass", async (req, res)=> {
 
   try {
     //finding if user and updating it
-    const user = await User.findOneAndUpdate({email: email}, {
+    const user = await User.findOneAndUpdate({ email: email }, {
       resetPasswordToken: hashedresetPasswordToken,
       resetPasswordExpire: expireDate
     });
@@ -130,16 +137,33 @@ router.post("/forgotpass", async (req, res)=> {
     `
     const emailTemplate = createResetEmailHTML(user.firstName, resetURl)
     try {
-      sendEmail({
-        to: user.email,
-        subject: "Forgot Password",
-        // emailhtml: emailTemplate,
-        emailtext: emailtext,
-      });
+
+const mailOptions = {
+  form: "erbitservices@gmail.com",
+  to: email,
+  subject: "Password Reset Link",
+text:emailtext,
+};
+
+transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    return res.status(401).json({ msg: "Failed to send email" });
+  } else {
+    res.status(200).json({ msg: "Email send Sucessfully" });
+  }
+});
+
+
+      // sendEmail({
+      //   to: email,
+      //   subject: "Forgot Password",
+      //   // emailhtml: emailTemplate,
+      //   emailtext: emailtext,
+      // });
 
       console.log("okay");
       
-    res.status(200).json({ sucess: true, message: "Email send Sucessfully" });
+    // res.status(200).json({ sucess: true, message: "Email send Sucessfully" });
       
     } catch (error) {
       //removing users reset token if its not valid
@@ -147,10 +171,9 @@ router.post("/forgotpass", async (req, res)=> {
         resetPasswordToken: undefined,
         resetPasswordExpire: undefined
       });
-      console.log("ohh no");
       
       console.log(error)
-      return res.status(401).json({sucess: false,message: "Failed to send email"})
+       res.status(401).json({sucess: false,message: "Failed to send email"})
     }
 
 
