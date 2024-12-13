@@ -163,7 +163,7 @@ transporter.sendMail(mailOptions, (error, info) => {
 
       console.log("okay");
       
-    // res.status(200).json({ sucess: true, message: "Email send Sucessfully" });
+    res.status(200).json({ sucess: true, message: "Email send Sucessfully" });
       
     } catch (error) {
       //removing users reset token if its not valid
