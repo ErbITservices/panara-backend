@@ -36,8 +36,8 @@ router.put("/update/:id", async (req, res) => {
         to: order.email,
         subject: "Order Confirmation",
         // emailhtml: emailHTML,
-        emailtext: "Your Complain Status Is Updated Please Check Now"
-      })
+        emailtext: `Your Complain Status Is Updated To ${order.status}. You Can Check Now.`,
+      });
       
     } catch (err) {
       console.log(err)

@@ -3,7 +3,7 @@ const dotenv = require("dotenv").config();
 
 const sendEmail = (options) => {
   const transporter = nodemailer.createTransport({
-    service: process.env.MAIL_SERVICE,
+    service: process.env.MAIL_SERVICE, 
     port: 465,
     secure: true,
     auth: {
@@ -15,7 +15,7 @@ const sendEmail = (options) => {
 
 
   const mailOptions = {
-    from: `my Comany <${process.env.EMAIL_FROM}>`,
+    from: `PanaraIT <${process.env.EMAIL_FROM}>`,
     to: options.to,
     subject: options.subject,
     html: options.emailhtml,

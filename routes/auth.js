@@ -134,10 +134,12 @@ router.post("/forgotpass", async (req, res)=> {
         to: user.email,
         subject: "Forgot Password",
         // emailhtml: emailTemplate,
-        emailtext: `You Can Reset Your Password Using This Link (This Link Expire In 1 Hour) ${resetURl}`,
+        emailtext: emailtext,
       });
 
       console.log("okay");
+      
+    res.status(200).json({ sucess: true, message: "Email send Sucessfully" });
       
     } catch (error) {
       //removing users reset token if its not valid
@@ -150,7 +152,6 @@ router.post("/forgotpass", async (req, res)=> {
       console.log(error)
       return res.status(401).json({sucess: false,message: "Failed to send email"})
     }
-    res.status(200).json({sucess: true,message: "Email send Sucessfully"})
 
 
   } catch (error) {
