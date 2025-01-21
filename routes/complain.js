@@ -55,7 +55,10 @@ router.post("/", async (req, res) => {
   console.log("started");
   console.log(req.body);
   try {
-    const savedProduct = await Complain.create({ ...req.body, _id: id });
+    const savedProduct = await Complain.create({
+      ...req.body.library,
+      _id: id,
+    });
     console.log("save");
     if (savedProduct) {
       console.log(savedProduct.email);
