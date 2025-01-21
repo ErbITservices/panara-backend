@@ -1,8 +1,11 @@
 const router = require("express").Router();
 
-const {uploadImageToCloudinary, deleteImageFromCloudinary} = require('../utils/cloudinaryMethods.js');
+const {
+  uploadImageToCloudinary,
+  deleteImageFromCloudinary,
+} = require("../utils/cloudinaryMethods.js");
 const Complain = require("../models/Complainschema.js");
-const mongoose  = require("mongoose");
+const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 
 const sendEmail = require("../helpers/sendEmail");
@@ -16,65 +19,64 @@ const transporter = nodemailer.createTransport({
 });
 
 router.put("/update/:id", async (req, res) => {
-  
-  
-    const {status} = req.body;
-    const { id } = req.params;
-  
-    // if(!mongoose.isValidObjectId(id)) return res.status(402).json({message: "order id is not valid"})
-    if(!status) return res.status(402).json({message: "status is requires"})
+  const { status } = req.body;
+  const { id } = req.params;
 
-  
-    try {
-      const order = await Complain.findByIdAndUpdate(id, {status:status},{new: true});
-      console.log(order);
-      
-  
-      res.status(200).json({ message: `order status is successfully updated to ${status}` });
-      // const emailHTML = createOrderTemplate(order);
-      sendEmail({
-        to: order.email,
-        subject: "Order Confirmation",
-        // emailhtml: emailHTML,
-        emailtext: `Your Complain Status Is Updated To ${order.status}. You Can Check Now.`,
-      });
-      
-    } catch (err) {
-      console.log(err)
-      res.status(500).json({message: "internal server error"});
-    }
-  });
+  // if(!mongoose.isValidObjectId(id)) return res.status(402).json({message: "order id is not valid"})
+  if (!status) return res.status(402).json({ message: "status is requires" });
 
+  try {
+    const order = await Complain.findByIdAndUpdate(
+      id,
+      { status: status },
+      { new: true }
+    );
+    console.log(order);
 
+    res
+      .status(200)
+      .json({ message: `order status is successfully updated to ${status}` });
+    // const emailHTML = createOrderTemplate(order);
+    sendEmail({
+      to: order.email,
+      subject: "Order Confirmation",
+      // emailhtml: emailHTML,
+      emailtext: `Your Complain Status Is Updated To ${order.status}. You Can Check Now.`,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "internal server error" });
+  }
+});
 
 router.post("/", async (req, res) => {
   const id = mongoose.Types.ObjectId();
   console.log(id);
   console.log("started");
-  console.log(req.body.library);
+  console.log(req.body);
   try {
-    const savedProduct = await Complain.create({ ...req.body.library, _id: id });
-    console.log('save');
+    const savedProduct = await Complain.create({ ...req.body, _id: id });
+    console.log("save");
     if (savedProduct) {
       console.log(savedProduct.email);
-            const mailOptions = {
-              form: "erbitservices@gmail.com",
-              to: `${savedProduct.email}, panaraenterprise.pvt.ltd@gmail.com`,
-              subject: "Complain received",
-              text: ` We Received New Complain Of ${savedProduct.lname}, Ticket Id Is ${id} facing issues and it's decripstion is it :-  ${savedProduct.problemstatement} `,
-            };
-            transporter.sendMail(mailOptions,(error,info)=>{
-                if(error){
-                    return res.status(400).json({msg:"error sending mail"});
-                    }else{
-                        res.status(200).json({msg:"Info Sended In to Mail"});
-                    }
-            })
-        }
+      const mailOptions = {
+        form: "erbitservices@gmail.com",
+        to: `${savedProduct.email}, panaraenterprise.pvt.ltd@gmail.com`,
+        subject: "Complain received",
+        text: ` We Received New Complain Of ${savedProduct.lname}, Ticket Id Is ${id} facing issues and it's decripstion is it :-  ${savedProduct.problemstatement} `,
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return res.status(400).json({ msg: "error sending mail" });
+        } else {
+          res.status(200).json({ msg: "Info Sended In to Mail" });
+        }
+      });
+    }
     res.status(200).json(savedProduct);
   } catch (err) {
-    console.log("ohhno",err);
-    
+    console.log("ohhno", err);
+
     if (err.name === "ValidationError") {
       if (err.name == "ValidationError") {
         for (field in err.errors) {
@@ -94,33 +96,28 @@ router.post("/", async (req, res) => {
   }
 });
 router.get("/:lname", async (req, res) => {
- 
+  try {
+    const data = await Complain.findOne({ lname: req.params.lname });
 
-   try {
-     const data = await Complain.findOne({lname:req.params.lname});
-
-     res.status(200).json(data);
-     console.log("done");
-     console.log(data);
-   } catch (error) {
-     console.log(error);
-     res.status(400).json({ error: "internal servr error" });
-   }
+    res.status(200).json(data);
+    console.log("done");
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: "internal servr error" });
+  }
 });
 router.get("/", async (req, res) => {
- 
+  try {
+    const data = await Complain.find();
 
-   try {
-     const data = await Complain.find();
-
-     res.status(200).json(data);
-     console.log("done");
-     console.log(data);
-   } catch (error) {
-     console.log(error);
-     res.status(400).json({ error: "internal servr error" });
-   }
+    res.status(200).json(data);
+    console.log("done");
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: "internal servr error" });
+  }
 });
-
 
 module.exports = router;

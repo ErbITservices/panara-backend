@@ -6,8 +6,8 @@ const ComplainSchema = new Schema(
     lname: { type: String, required: true },
     service: { type: String, required: true, index: true },
     name: { type: String, required: true },
-    img: { type: Schema.Types.Mixed},
-    status: { type: String, default:'panding'},
+    img: { type: Schema.Types.Mixed },
+    status: { type: String, default: "panding" },
     // buy_price: { type: Number, required: true },
     mobilenumber: { type: Number, required: true },
     email: { type: String },
@@ -16,5 +16,5 @@ const ComplainSchema = new Schema(
   { timestamps: true }
 );
 
-const Complainschema = mongoose.model("Complainschema", ComplainSchema);
+const Complainschema = mongoose.model("Complainschema1", ComplainSchema);
 module.exports = Complainschema;

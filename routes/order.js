@@ -6,8 +6,16 @@ const product = require("../models/product");
 const {createOrderTemplate} = require("../helpers/orderConfrimation");
 const sendEmail = require("../helpers/sendEmail");
 const router = require("express").Router();
+const nodemailer = require("nodemailer");
 
 //CREATE
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "erbitservices@gmail.com",
+    pass: "rorvwwarciklfgyw",
+  },
+});
 
 router.post("/", verifyToken, async (req, res) => {
   const newOrder = new Order(req.body);
@@ -106,14 +114,26 @@ router.put("/status/:id", verifyAdminWithToken, async (req, res) => {
     const order = await ConfirmOrders.findByIdAndUpdate(id, {orderStatus: status}, {new: true});
     const emailHTML = createOrderTemplate(order)
 
-    sendEmail({
-      to: order.userInfo.email,
-      subject: "Order Confirmation",
-      emailhtml: emailHTML,
-      emailtext: emailHTML
-    })
+    
 
-    res.status(200).json({message: `order status is successfully updated to ${status}`});
+    const mailOptions = {
+      form: "erbitservices@gmail.com",
+      to: order.userInfo.email,
+      subject: "Password Reset Link",
+      text: emailHTML,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).json({ message: "internal server error" });
+
+      } else {
+    res
+      .status(200)
+      .json({ message: `order status is successfully updated to ${status}` });
+      }
+    });
+
   } catch (err) {
     console.log(err)
     res.status(500).json({message: "internal server error"});

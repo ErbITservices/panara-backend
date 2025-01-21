@@ -8,6 +8,7 @@ const Contact = new Schema(
     Number: { type: String, required: true },
     Email: { type: String },
     Descr: { type: String },
+    Institute: { type: String },
   },
   { timestamps: true }
 );
