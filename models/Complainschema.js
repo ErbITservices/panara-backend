@@ -9,7 +9,7 @@ const ComplainSchema = new Schema(
     img: { type: Schema.Types.Mixed },
     status: { type: String, default: "panding" },
     // buy_price: { type: Number, required: true },
-    mobilenumber: { type: Number, required: true },
+    mobilenumber: { type: Number,  },
     email: { type: String },
     problemstatement: { type: String },
   },
