@@ -95,4 +95,5 @@ panara-backend/
    http://localhost:3000/
 ```
 ## 👥 Contributors
+ - JAIMINPRAJAPATI
  - PATELMIHIR2715
